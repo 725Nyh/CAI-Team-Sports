@@ -13,6 +13,14 @@ from flask_dialogflow.conversation import V2beta1DialogflowConversation
 def test_intent_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     return handlers.test_intent(conv)
 
+@agent.handle(intent="Function-introduction")
+def Function_introduction_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
+    return handlers.Function_introduction_intent(conv)
+
+
+
+
+
 @agent.handle(intent="restaurant.search")
 def restaurants_intent_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     return handlers.ask_travel_mode(conv)

@@ -19,6 +19,13 @@ def welcome_intent(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConv
     conv.google.ask(render_template("welcome"))
     return conv
 
+def Function_introduction_intent(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
+    conv.ask(render_template("Functions"))
+    conv.google.ask(render_template("Functions"))
+    return conv
+
+
+
 
 def suggest_walkable_restaurants(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
 

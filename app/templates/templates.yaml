@@ -4,6 +4,10 @@
 test_response:
 - This is a test response.
 
+Functions:
+- I can give you ....
+
+
 mode.travel.ask:
 - Would you like to walk to a nearby restaurant?
 - Do you prefer a restaurant at a walkable distance?
