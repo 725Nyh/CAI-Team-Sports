@@ -5,18 +5,8 @@ test_response:
 - This is a test response.
 
 Functions:
-- I can give you ....
+- I have a list of different football records, I can also give you more information about this record, such as the record holder, the record type, the year of it and so on.
 
 
-mode.travel.ask:
-- Would you like to walk to a nearby restaurant?
-- Do you prefer a restaurant at a walkable distance?
-- Is walking to a restaurant okay for you?
-
-walkable_restaurant:
-- Here is a walkable restaurant that servers Authentic cuisine of {{ cuisine }}
-
-not_walkable_restaurant:
-- Here is a great restaurant that servers Authentic cuisine of {{ cuisine }}
-
-
+Record-response:
+- Ok, {{Player}} holds the record of {{Record}}.
