@@ -19,6 +19,7 @@ dtype={
       'Type':str
       }
 
+
 # define sub handlers
 def test_intent(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     conv.ask(render_template("test_response"))
@@ -40,8 +41,8 @@ def Find_record_intent(conv: V2beta1DialogflowConversation) -> V2beta1Dialogflow
     #register the user's order, the user can limit the nationality, the player, the record type etc.
     #It's also possible that nothing is limited, so a random record will be given.
     nation = conv.parameters.get("geo-country")
-    year = conv.parameters.get("time")
-    year_period = conv.parameters.get("time-period")
+    year = conv.parameters.get("number-sequence")
+    #year_period = conv.parameters.get("any")
     name = conv.parameters.get("whole-name")
     type = conv.parameters.get("record-type")
 
@@ -74,10 +75,31 @@ def Find_record_intent(conv: V2beta1DialogflowConversation) -> V2beta1Dialogflow
             if data_frame.iloc[i][5]==type:
                 conv.contexts.set("find_record_ctx",lifespan_count=3,Record=data_frame.iloc[i][0],Player=data_frame.iloc[i][1],Nationality=data_frame.iloc[i][2],Years=data_frame.iloc[i][3],Details=data_frame.iloc[i][4],Type=data_frame.iloc[i][5])
                 break
+    
+    #if time is fixed
+    elif year !='':
+        #we use sys.number-sequence entity, this entity can only provide pure number,
+        #so when a time period for example 2002-2021 was given, year=20022021, 
+        #this string needs to be processed
+        
+        if len(year)>4:
+            #the sys.number entity can not recognize 'present',
+            #so we stipulate that the user needs to enter 2022 instead of present
+            #then we revert '2022' to 'present' in the code and compare with the excel data.
+            year=year.replace('2022','present')
+            str_list = list(year)
+            str_list.insert(4, '–')
+            year = ''.join(str_list)
 
-    #if time is fixed, not done yet
-
-
+        for i in range(data_frame.shape[0]):
+            if data_frame.iloc[i][3]==year:
+                conv.contexts.set("find_record_ctx",lifespan_count=3,Record=data_frame.iloc[i][0],Player=data_frame.iloc[i][1],Nationality=data_frame.iloc[i][2],Years=data_frame.iloc[i][3],Details=data_frame.iloc[i][4],Type=data_frame.iloc[i][5])
+                break
+            if i==data_frame.shape[0]-1 :
+                conv.ask("There is no such a record in my list")
+                conv.google.ask("There is no such a record in my list")
+                return conv
+    
     #if nothing is fixed, give a random record
     else :
         index=random.randint(0,data_frame.shape[0])
@@ -89,6 +111,8 @@ def Find_record_intent(conv: V2beta1DialogflowConversation) -> V2beta1Dialogflow
     conv.ask(render_template("Record-response",Player=Player,Record=Record))
     conv.google.ask(render_template("Record-response",Player=Player,Record=Record))
     return conv
+
+
 
 def Time_supplementary_intent(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     Years=conv.contexts.find_record_ctx.parameters["Years"]
