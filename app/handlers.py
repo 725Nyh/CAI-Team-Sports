@@ -10,6 +10,15 @@ from flask_dialogflow.conversation import V2beta1DialogflowConversation
 import pandas as pd
 import random
 
+dtype={
+      'Record':str,
+      'Nationality':str,
+      'Player':str,
+      'Year(s)':str,
+      'Details':str,
+      'Type':str
+      }
+
 # define sub handlers
 def test_intent(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     conv.ask(render_template("test_response"))
@@ -33,12 +42,13 @@ def Find_record_intent(conv: V2beta1DialogflowConversation) -> V2beta1Dialogflow
     nation = conv.parameters.get("geo-country")
     year = conv.parameters.get("time")
     year_period = conv.parameters.get("time-period")
-    name = conv.parameters.get("last-name")
+    name = conv.parameters.get("whole-name")
     type = conv.parameters.get("record-type")
 
     print(nation)
     #read the excel file and get a data frame.
-    data_frame = pd.read_excel(r'C:\Users\Dominik Nie\Desktop\football_records_table.xlsx')
+
+    data_frame = pd.read_excel(r'C:\Users\Dominik Nie\Desktop\football_records_table.xlsx',dtype=dtype)
     print(data_frame.values)
 
     #according to the request, find a corresponding record.
@@ -80,3 +90,12 @@ def Find_record_intent(conv: V2beta1DialogflowConversation) -> V2beta1Dialogflow
     conv.google.ask(render_template("Record-response",Player=Player,Record=Record))
     return conv
 
+def Time_supplementary_intent(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
+    Years=conv.contexts.find_record_ctx.parameters["Years"]
+    if len(Years)<=4:
+        conv.ask(Years)
+        conv.google.ask(Years)
+    else:
+        conv.ask(Years)
+        conv.google.ask(Years)
+    return conv

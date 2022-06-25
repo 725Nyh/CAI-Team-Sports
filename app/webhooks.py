@@ -22,5 +22,8 @@ def Function_introduction_handler(conv: V2beta1DialogflowConversation) -> V2beta
 def Find_record_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     return handlers.Find_record_intent(conv)
 
+@agent.handle(intent="Time-supplementary")
+def Time_supplementary_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
+    return handlers.Time_supplementary_intent(conv)
 
 
