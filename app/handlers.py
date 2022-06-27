@@ -135,6 +135,25 @@ def Time_supplementary_intent(conv: V2beta1DialogflowConversation) -> V2beta1Dia
     return conv
 
 
+def country_supplementary_intent(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
+    Nationality = conv.contexts.find_record_ctx.parameters["Nationality"]
+    conv.ask(Nationality)
+    conv.google.ask(Nationality)
+    return conv
+
+
+def record_count_intent(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
+    rec_count = 0
+    data_frame = pd.read_excel(r'data/football_records_table.xlsx', dtype=dtype)
+    Player = conv.contexts.find_record_ctx.parameters["Player"]
+    for i in range(data_frame.shape[0]):
+        if data_frame.iloc[i][1] == Player:
+            rec_count = rec_count + 1
+    conv.ask(render_template("record_count_response", Player=Player, Record_Count=rec_count))
+    conv.google.ask(render_template("record_count_response", Player=Player, Record_Count=rec_count))
+    return conv
+
+
 def context_set(conv, df, i):
     conv.contexts.set("find_record_ctx", lifespan_count=3, Record=df.iloc[i][0],
                       Player=df.iloc[i][1], Nationality=df.iloc[i][2],

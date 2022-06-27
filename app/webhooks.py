@@ -17,7 +17,6 @@ def test_intent_handler(conv: V2beta1DialogflowConversation) -> V2beta1Dialogflo
 def Function_introduction_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     return handlers.Function_introduction_intent(conv)
 
-
 @agent.handle(intent="Find-record")
 def Find_record_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     return handlers.Find_record_intent(conv)
@@ -26,4 +25,11 @@ def Find_record_handler(conv: V2beta1DialogflowConversation) -> V2beta1Dialogflo
 def Time_supplementary_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     return handlers.Time_supplementary_intent(conv)
 
+@agent.handle(intent="country_supplementary")
+def country_supplementary_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
+    return handlers.country_supplementary_intent(conv)
+
+@agent.handle(intent="record_count")
+def record_count_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
+    return handlers.record_count_intent(conv)
 

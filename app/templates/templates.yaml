@@ -11,4 +11,6 @@ Functions:
 Record-response:
 - Ok, {{Player}} holds the record of {{Record}}.
 
+record_count_response:
+- Well, {{Player}} holds {{Record_Count}} record(s) in total.
 
