@@ -5,7 +5,7 @@ test_response:
 - This is a test response.
 
 Functions:
-- I have a list of different football records, I can also give you more information about this record, such as the record holder, the record type, the year of it and so on.
+- I have a list of different football records. I can give you more specific information about these records, such as the record holder, record type, year of it, and so on.
 
 
 Record-response:
