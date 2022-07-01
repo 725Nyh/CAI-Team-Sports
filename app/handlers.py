@@ -66,7 +66,6 @@ def Find_record_intent(conv: V2beta1DialogflowConversation) -> V2beta1Dialogflow
 
     # if Player is given by user
     elif name != '':
-        # print(name)
         for i in range(shuffled_df.shape[0]):
             if shuffled_df.iloc[i][1] == name:
                 context_set(conv, shuffled_df, i)
@@ -93,7 +92,6 @@ def Find_record_intent(conv: V2beta1DialogflowConversation) -> V2beta1Dialogflow
             str_list = list(year)
             str_list.insert(4, '–')
             year = ''.join(str_list)
-            print(len(year))
 
         for i in range(shuffled_df.shape[0]):
             year_col = str(shuffled_df.iloc[i][3])
@@ -102,7 +100,6 @@ def Find_record_intent(conv: V2beta1DialogflowConversation) -> V2beta1Dialogflow
                 year2 = year_col[5:9]
                 for y in range(int(year1), int(year2) + 1):
                     if str(y) == year:
-                        print("getout")
                         context_set(conv, shuffled_df, i)
                         get_out = 1
                         break
@@ -154,6 +151,11 @@ def country_supplementary_intent(conv: V2beta1DialogflowConversation) -> V2beta1
     conv.google.ask(Nationality)
     return conv
 
+def name_supplementary_intent(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
+    Player = conv.contexts.find_record_ctx.parameters["Player"]
+    conv.ask(render_template("player_name_response", Player=Player))
+    conv.google.ask(render_template("player_name_response", Player=Player))
+    return conv
 
 def record_count_intent(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     rec_count = 0

@@ -37,6 +37,10 @@ def Type_supplementary_handler(conv: V2beta1DialogflowConversation) -> V2beta1Di
 def country_supplementary_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     return handlers.country_supplementary_intent(conv)
 
+@agent.handle(intent="name_supplementary")
+def name_supplementary_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
+    return handlers.name_supplementary_intent(conv)
+
 @agent.handle(intent="record_count")
 def record_count_handler(conv: V2beta1DialogflowConversation) -> V2beta1DialogflowConversation:
     return handlers.record_count_intent(conv)

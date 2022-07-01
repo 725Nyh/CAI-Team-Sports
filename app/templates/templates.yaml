@@ -11,7 +11,10 @@ Record-response:
 - Ok, {{Player}} holds the record of {{Record}} from year {{Year}}.
 
 Details-response:
-- Here are some additional details for you:{{Details}}.
+- Here are some additional details for you:{{ Details}}.
 
 record_count_response:
 - Well, {{Player}} holds {{Record_Count}} record(s) in total.
+
+player_name_response:
+- The player's name is {{Player}}.
